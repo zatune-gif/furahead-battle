@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b6e8bfc41d7174991645976f00d719, type: 3}
+  m_Name: ArmR_1
+  m_EditorClassIdentifier: Assembly-CSharp::PartData
+  partName: ArmR 1
+  sprite: {fileID: -8497786196115190837, guid: c15ea5bd5f54e87439b45c61a2de36e4, type: 3}
+  partType: 3
+  anchorOffset: {x: 0, y: 0}

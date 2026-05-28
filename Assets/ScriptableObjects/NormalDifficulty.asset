@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6162f0fa91d2f4489fa3aeb0b5c4ab, type: 3}
+  m_Name: NormalDifficulty
+  m_EditorClassIdentifier: Assembly-CSharp::AIDifficultyData
+  approachSpeed: 5
+  waitTimeRange: {x: 0.3, y: 1.0}
+  justDodgeChance: 0.3
+  headbuttForce: 20
+  lowHPThreshold: 30
+  lowHPHeadbuttMultiplier: 1.5

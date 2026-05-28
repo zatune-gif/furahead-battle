@@ -1,0 +1,4 @@
+
+# 旧バージョンのWebGLビルド（最新版のみコミットする）
+Build/*.zip
+!Build/PeraperaBattle_WebGL_v8.zip
