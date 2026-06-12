@@ -11,6 +11,9 @@ public class AIController : MonoBehaviour
     int prevHitCount;
     Camera cam;
 
+    // 接近中にジャンプ接近へ移行する1フレームあたりの確率
+    const float JumpApproachChancePerFrame = 0.004f;
+
     enum AIState { Approach, Wait, Retreat, JumpApproach }
     AIState aiState = AIState.Approach;
 
@@ -81,7 +84,7 @@ public class AIController : MonoBehaviour
         {
             ai.Move(dir * difficulty.approachSpeed / 4f);
 
-            if (dist < 3f && Random.value < 0.004f)
+            if (dist < 3f && Random.value < JumpApproachChancePerFrame)
             {
                 EnterJumpApproach();
                 return;

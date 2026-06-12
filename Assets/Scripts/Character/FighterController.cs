@@ -12,6 +12,15 @@ public class FighterController : MonoBehaviour
     public AudioClip jumpSE;
     public AudioClip headbuttSE;
 
+    // 挙動チューニング定数
+    const float JumpLockoutSec     = 0.5f;   // ジャンプ連打防止
+    const float HeadbuttDurationSec = 0.4f;  // 頭突きモーション時間
+    const float FallGravityScale   = 2.5f;   // 落下時の重力倍率（キレのある着地）
+    const float KnockbackSpeedX    = 10f;
+    const float KnockbackSpeedY    = 6f;
+    const float UprightRecoverSec  = 0.25f;  // 頭突き後に直立へ戻す時間
+    const float JumpCutMultiplier  = 0.4f;   // ジャンプボタン早離し時の上昇減衰
+
     AudioSource audioSource;
 
     public CharacterState State { get; private set; } = CharacterState.Idle;
@@ -41,7 +50,7 @@ public class FighterController : MonoBehaviour
         if (jumpLockout  > 0f) jumpLockout  -= Time.deltaTime;
 
         if (bodyRb != null)
-            bodyRb.gravityScale = bodyRb.linearVelocity.y < 0f ? 2.5f : 1f;
+            bodyRb.gravityScale = bodyRb.linearVelocity.y < 0f ? FallGravityScale : 1f;
     }
 
     public bool CanJump => bodyRb != null && jumpLockout <= 0f && Mathf.Abs(bodyRb.linearVelocity.y) < 0.2f;
@@ -49,7 +58,7 @@ public class FighterController : MonoBehaviour
     public void Jump()
     {
         if (!CanJump || State == CharacterState.Headbutting) return;
-        jumpLockout = 0.5f;
+        jumpLockout = JumpLockoutSec;
         bodyRb.linearVelocity = new Vector2(bodyRb.linearVelocity.x, jumpForce);
         if (jumpSE != null) audioSource.PlayOneShot(jumpSE);
     }
@@ -84,7 +93,7 @@ public class FighterController : MonoBehaviour
 
         cooldownTimer = headbuttCooldown;
         if (headbuttSE != null) audioSource.PlayOneShot(headbuttSE);
-        Invoke(nameof(EndHeadbutt), 0.4f);
+        Invoke(nameof(EndHeadbutt), HeadbuttDurationSec);
     }
 
     public void TakeDamage(int attackerDir)
@@ -111,13 +120,13 @@ public class FighterController : MonoBehaviour
     {
         if (bodyRb == null) return;
         bodyRb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        bodyRb.linearVelocity = new Vector2(attackerDir * 10f, 6f);
+        bodyRb.linearVelocity = new Vector2(attackerDir * KnockbackSpeedX, KnockbackSpeedY);
     }
 
     public void CutJump()
     {
         if (bodyRb != null && bodyRb.linearVelocity.y > 0f)
-            bodyRb.linearVelocity = new Vector2(bodyRb.linearVelocity.x, bodyRb.linearVelocity.y * 0.4f);
+            bodyRb.linearVelocity = new Vector2(bodyRb.linearVelocity.x, bodyRb.linearVelocity.y * JumpCutMultiplier);
     }
 
     public int FacingDir => facingDir;
@@ -142,7 +151,7 @@ public class FighterController : MonoBehaviour
     {
         if (bodyRb == null) yield break;
         float elapsed = 0f;
-        float duration = 0.25f;
+        float duration = UprightRecoverSec;
         float startAngle = bodyRb.rotation;
         bodyRb.angularVelocity = 0f;
         while (elapsed < duration)
