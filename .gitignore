@@ -2,3 +2,18 @@
 # 旧バージョンのWebGLビルド（最新版のみコミットする）
 Build/*.zip
 !Build/PeraperaBattle_WebGL_v8.zip
+
+# Unity標準の除外パターン（生成物・ローカル環境依存ファイル）
+[Ll]ibrary/
+[Tt]emp/
+[Ll]ogs/
+[Oo]bj/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+*.csproj
+*.sln
+*.slnx
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+.vs/
